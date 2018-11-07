@@ -1,15 +1,35 @@
 <div class="container">
-  <h1><%= @restaurant.name %></h1>
-  <p>Address: <%= @restaurant.address %></p>
-  <p>Cuisine: <%= @restaurant.category %></p>
-  <hr>
-  <h2>Reviews
-  <%= link_to new_restaurant_review_path(@restaurant) do %>
-    <i class="fas fa-plus-square" style="font-size: 30px"></i>
-  <% end %></h2>
-  <ul>
-    <% @reviews.each do |review| %>
-      <li><%= review.content %> (Stars: <%= review.rating %>)</li>
-    <% end %>
-  </ul>
+  <div class="text-center">
+    <h1><%= @restaurant.name %></h1>
+    <p>Address: <%= @restaurant.address %></p>
+    <p>Cuisine: <%= @restaurant.category %></p>
+    <hr>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <h2 class="text-center">Reviews</h2>
+      <ul>
+        <% @reviews.each do |review| %>
+          <li><%= review.content %> (Stars: <%= review.rating %>)</li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <h2 class="text-center">New Review</h2>
+      <%= simple_form_for [@restaurant, @review] do |f| %>
+        <% if @review.errors.any? %>
+          <div class="errors-container">
+            <ul>
+              <% @review.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <%= f.input :content %>
+        <%= f.input :rating, collection: [["how many stars?", nil], ["Zero", 0], ["One", 1], ["Two", 2], ["Three", 3], ["Four", 4], ["Five", 5]] %>
+        <%= f.submit "Create", class: "btn btn-primary btn-block" %>
+      <% end %>
+    </div>
+  </div>
 </div>
