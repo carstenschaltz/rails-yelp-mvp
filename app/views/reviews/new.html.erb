@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>New Review for <%= @restaurant.name %></h1>
+  <%= simple_form_for [@restaurant, @review] do |f| %>
+    <% if @review.errors.any? %>
+      <div class="errors-container">
+        <ul>
+          <% @review.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= f.input :content %>
+    <%= f.input :rating, collection: [["how many stars?", nil], ["Zero", 0], ["One", 1], ["Two", 2], ["Three", 3], ["Four", 4], ["Five", 5]] %>
+    <%= f.submit "Create", class: "btn btn-default" %>
+  <% end %>
+</div>
+</div>
